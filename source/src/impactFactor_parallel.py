@@ -10,15 +10,15 @@ from multiprocessing import Pool
 
 
 def evaluate_user(u):
-    global results
+    global results,twitterApi
     try:
 	tweets = u.timeline(count=100, include_rts=1)
 	retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
 	    
-	friends = u.get_api().friends_ids(user_id=u.id)
+	friends = twitterApi.friends_ids(user_id=u.id)
 	friends_ids = friends[0]
 	    
-	followers = u.get_api().followers_ids(user_id=u.id)
+	followers = twitterApi.followers_ids(user_id=u.id)
 	followers_ids = followers[0]
 	    
 	impact = len([i for i in followers_ids if i in friends_ids])/(len(followers_ids)+0.0000)
