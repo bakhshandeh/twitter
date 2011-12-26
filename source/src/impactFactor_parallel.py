@@ -12,7 +12,7 @@ from multiprocessing import Pool
 def evaluate_user(u):
 	global results,twitterApi
 	#try:
-	tweets = twitterApi.timeline(user_id=u.id, count=100, include_rts=1)
+	tweets = twitterApi.user_timeline(user_id=u.id, count=100, include_rts=1)
 	retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
 	    
 	friends = twitterApi.friends_ids(user_id=u.id)
