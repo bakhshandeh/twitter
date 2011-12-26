@@ -10,8 +10,8 @@ from multiprocessing import Pool
 
 
 def evaluate_user(u):
-    global results,twitterApi
-    try:
+	global results,twitterApi
+	#try:
 	tweets = u.timeline(count=100, include_rts=1)
 	retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
 	    
@@ -24,9 +24,9 @@ def evaluate_user(u):
 	impact = len([i for i in followers_ids if i in friends_ids])/(len(followers_ids)+0.0000)
 	    
 	results.append(Result(u.screen_name, retweets/100.00, impact))
-    except Exception,e:
-	print e
-	pass
+	#except Exception,e:
+	#print e
+	#pass
     
 
 class Result:
