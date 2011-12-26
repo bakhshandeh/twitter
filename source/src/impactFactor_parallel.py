@@ -66,7 +66,7 @@ if __name__ == "__main__":
     users = twitterApi.search_users(q=sys.argv[1], per_page=200)
     results = []
     
-    pool = Pool(20)
+    pool = Pool(1)
     results = pool.map(evaluate_user, users)
     
     results.sort()
