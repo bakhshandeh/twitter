@@ -23,9 +23,8 @@ def evaluate_user(u):
 	    
 	impact = len([i for i in followers_ids if i in friends_ids])/(len(followers_ids)+0.0000)
 	    
-	results.append(Result(u.screen_name, retweets/100.00, impact))
+	return Result(u.screen_name, retweets/100.00, impact)
 	
-	return 1
 	#except Exception,e:
 	#print e
 	#pass
@@ -68,7 +67,7 @@ if __name__ == "__main__":
     results = []
     
     pool = Pool(20)
-    print pool.map(evaluate_user, users)
+    results = pool.map(evaluate_user, users)
     
     results.sort()
     results.reverse()
