@@ -277,7 +277,7 @@ class DBCache(Cache):
 	#self.conn=adodb.NewADOConnection('mysql')
 	#self.conn.Connect(server, user, password, db)
 	#print self.conn.DriverInfo()
-	self.conn = psycopg2.connect("dbname=twitter user=twitter")
+	self.conn = psycopg2.connect("dbname=twitter user=postgres password=mehdireza")
 	self.conn.set_client_encoding("ISO-8859-1");
     
     def store(self, key, value):
