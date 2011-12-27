@@ -5,7 +5,7 @@
 import time
 import threading
 import os
-import adodb
+import adodb,psycopg2
 import cPickle as pickle
 
 try:
@@ -272,22 +272,26 @@ class FileCache(Cache):
 
 class DBCache(Cache):
     
-    def __init__(self, timeout=60, server='127.0.0.1', user='root', password='', db='twitter'):
+    def __init__(self, timeout=60, server='127.0.0.1', user='root', password='reza', db='twitter'):
 	Cache.__init__(self,timeout)
-	self.conn=adodb.NewADOConnection('mysql')
-	self.conn.Connect(server, user, password, db)
+	#self.conn=adodb.NewADOConnection('mysql')
+	#self.conn.Connect(server, user, password, db)
+	#print self.conn.DriverInfo()
+	self.conn = psycopg2.connect("dbname=twitter user=twitter")
+	self.conn.set_client_encoding("ISO-8859-1");
     
     def store(self, key, value):
 	val= pickle.dumps(value)
-	ret = self.conn.Execute("INSERT into data(k, value) values(%s, compress(%s))",(key, val))
-	self.conn.CommitTrans()
+	cur = self.conn.cursor()
+	ret = cur.execute("INSERT into data(k, value) values(%s, %s)",(key, val))
+	self.conn.commit()
 
     def get(self, key, timeout=None):
-	cursor = self.conn.Execute("SELECT uncompress(value) as val from data where k=%s",(key, ));
-	while not cursor.EOF:
-	    arr = cursor.GetRowAssoc(0)
-	    val = arr['val']
-	    entry = pickle.loads(val)
+	cur = self.conn.cursor()
+	cur.execute("SELECT value from data where k=%s",(key, ))
+	row = cur.fetchone()
+	if row:
+	    entry = pickle.loads(row[0])
 	    return entry
 	return None
 

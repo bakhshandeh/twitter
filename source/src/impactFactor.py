@@ -42,7 +42,7 @@ if __name__ == "__main__":
     #try:
     user1 = twitterApi.search_users(q=sys.argv[1], per_page=200)
     results = []
-    for u in user1[:]:
+    for u in user1[:2]:
 	try:
 	    tweets = u.timeline(count=100, include_rts=1)
 	    retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])

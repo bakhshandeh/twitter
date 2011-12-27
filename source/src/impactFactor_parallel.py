@@ -6,27 +6,41 @@ from tweepy.cache import FileCache,DBFileCache,DBCache
 from tweepy.api import API
 import tweepy
 from tweepy.models import *
-from multiprocessing import Pool
+import Queue, threading
 
+
+class EvalThread(threading.Thread):
+    
+    def __init__(self, queue):
+	self.queue = queue
+	threading.Thread.__init__(self)
+    
+    def run(self):
+	while True:
+    	    user = self.queue.get()
+    	    evaluate_user(user)
+            self.queue.task_done()
+    
 
 def evaluate_user(u):
 	global results,twitterApi
-	#try:
-	tweets = twitterApi.user_timeline(user_id=u.id, count=100, include_rts=1)
-	retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
+	try:
+	    tweets = twitterApi.user_timeline(user_id=u.id, count=100, include_rts=1)
+	    retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
 	    
-	friends = twitterApi.friends_ids(user_id=u.id)
-	friends_ids = friends[0]
+	    friends = twitterApi.friends_ids(user_id=u.id)
+	    friends_ids = friends[0]
 	    
-	followers = twitterApi.followers_ids(user_id=u.id)
-	followers_ids = followers[0]
+	    followers = twitterApi.followers_ids(user_id=u.id)
+	    followers_ids = followers[0]
 	    
-	impact = len([i for i in followers_ids if i in friends_ids])/(len(followers_ids)+0.0000)
+	    impact = len([i for i in followers_ids if i in friends_ids])/(len(followers_ids)+0.0000)
 	    
-	return Result(u.screen_name, retweets/100.00, impact)
-	
-	#except Exception,e:
-	#print e
+	    results.append(Result(u.screen_name, retweets/100.00, impact))
+	except Exception,e:
+	    import sys,traceback
+	    print "ERRRRRRRRRRRRRRRRRR: ",
+	    traceback.print_exc(sys.stdout)
 	#pass
     
 
@@ -65,9 +79,15 @@ if __name__ == "__main__":
     #try:
     users = twitterApi.search_users(q=sys.argv[1], per_page=200)
     results = []
+    queue = Queue.Queue()
+    for i in range(3):
+	t = EvalThread(queue)
+	t.setDaemon(True)
+        t.start()
     
-    pool = Pool(1)
-    results = pool.map(evaluate_user, users)
+    for u in users[:3]:
+	queue.put(u)
+    queue.join()
     
     results.sort()
     results.reverse()
