@@ -18,13 +18,13 @@ class EvalUser:
             self.impactFactor = self.__calcImpactFactor()
     
     @classmethod
-    def loadFromDB(cls,userId):
+    def loadFromDB(cls,userId, userObj = None):
         cur = DBSingleton.getInstance().cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("SELECT * from users where id=%s",(userId, ))
         row = cur.fetchone()
         if row:
             return cls.loadFromDBRow(row)
-        return cls.loadFromTwitter(userId)
+        return cls.loadFromTwitter(userId, userObj)
     
     @classmethod
     def loadFromDBRow(cls, row):
@@ -32,8 +32,9 @@ class EvalUser:
         return cls(userObj, row["retweet_factor"], row["impact_factor"], row["mc_factor"])
     
     @classmethod
-    def loadFromTwitter(cls, userId):
-        userObj = APISingleton.getInstance().get_user(user_id=userId)
+    def loadFromTwitter(cls, userId, userObj = None):
+        if not userObj:
+            userObj = APISingleton.getInstance().get_user(user_id=userId)
         ret = cls(userObj)
         ret.save()
         return ret
@@ -81,7 +82,7 @@ class EvalUser:
     
     @classmethod
     def load(cls, user):
-        return cls.loadFromDB(user.id)
+        return cls.loadFromDB(user.id, user)
     
     
         

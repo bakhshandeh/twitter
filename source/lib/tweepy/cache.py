@@ -277,6 +277,8 @@ class DBCache(Cache):
 	self.conn = conn
     
     def store(self, key, value):
+        if "lookup.json" in key:
+            return None
 	val= pickle.dumps(value)
 	cur = self.conn.cursor()
 	ret = cur.execute("INSERT into data(k, value) values(%s, %s)",(key, val))
