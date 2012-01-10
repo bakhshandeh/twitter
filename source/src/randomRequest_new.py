@@ -16,7 +16,7 @@ def handle_func(func, **args):
         except Exception,e:
             #traceback.print_exc(sys.stderr)
             handle_exception(e)
-            time.sleep(3)
+            #time.sleep(3)
             """
             print args
             print "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: ",e,sys.argv, args["user_id"]
