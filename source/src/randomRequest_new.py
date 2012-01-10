@@ -14,7 +14,6 @@ def handle_func(func, **args):
             ret = func(**args)
             return ret
         except Exception,e:
-            traceback.print_exc(sys.stdout)
             time.sleep(5)
             print args
             print "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: ",e,sys.argv, args["user_id"]
