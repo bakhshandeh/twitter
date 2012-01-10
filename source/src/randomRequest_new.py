@@ -14,7 +14,7 @@ def handle_func(func, **args):
             ret = func(**args)
             return ret
         except Exception,e:
-            traceback.print_exc(sys.stderr)
+            #traceback.print_exc(sys.stderr)
             handle_exception(e)
             time.sleep(3)
             """
@@ -44,4 +44,5 @@ if __name__ == "__main__":
                     print "fid: ",fId
                     EvalUser.loadFromDB(fId)
         except Exception, e:
-            print traceback.print_exc(sys.stderr)
+            #print traceback.print_exc(sys.stderr)
+            print e
