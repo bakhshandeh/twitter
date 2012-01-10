@@ -15,7 +15,6 @@ def handle_func(func, **args):
             return ret
         except Exception,e:
             traceback.print_exc(sys.stdout)
-            handle_exception(e)
             time.sleep(5)
             print args
             print "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: ",e,sys.argv, args["user_id"]
@@ -39,4 +38,4 @@ if __name__ == "__main__":
             for fId in twitterApi.friends_ids(user_id=i)[0]:
                 EvalUser.loadFromDB(fId)
         except Exception, e:
-            traceback.print_exc(sys.stderr)
+            print e
