@@ -14,7 +14,8 @@ def handle_func(func, **args):
             ret = func(**args)
             return ret
         except Exception,e:
-            time.sleep(5)
+            handle_exception(e)
+            time.sleep(3)
             print args
             print "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: ",e,sys.argv, args["user_id"]
             if str(e).find("Not au") != -1 or str(e).find("requires authentication") != -1:
