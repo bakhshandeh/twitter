@@ -213,7 +213,7 @@ class User(Model):
 	cursor = (-1,-1)
 	followers[dst.id] = []
 	while cursor[1] != 0:
-		ids,cursor = self._api.followers_ids(user_id=self.id, cursor=cursor[-1], **kargs)
+		ids,cursor = self._api.followers_ids(user_id=self.id, cursor=cursor[-1], **kargs) #@UndefinedVariable
 		followers[dst.id] += ids
 
     def followers(self, **kargs):

@@ -5,7 +5,7 @@
 import time
 import threading
 import os
-import adodb,psycopg2
+import psycopg2
 import cPickle as pickle
 
 try:
@@ -272,13 +272,9 @@ class FileCache(Cache):
 
 class DBCache(Cache):
     
-    def __init__(self, timeout=60, server='127.0.0.1', user='root', password='reza', db='twitter'):
+    def __init__(self, timeout=60, conn = None):
 	Cache.__init__(self,timeout)
-	#self.conn=adodb.NewADOConnection('mysql')
-	#self.conn.Connect(server, user, password, db)
-	#print self.conn.DriverInfo()
-	self.conn = psycopg2.connect("dbname=twitter user=postgres password=mehdireza")
-	self.conn.set_client_encoding("ISO-8859-1");
+	self.conn = conn
     
     def store(self, key, value):
 	val= pickle.dumps(value)

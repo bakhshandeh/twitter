@@ -7,6 +7,7 @@ from tweepy.api import API
 import tweepy
 from tweepy.models import *
 import Queue, threading
+from db import DBSingleton
 
 
 class EvalThread(threading.Thread):
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     auth.set_access_token("174566652-MOGbxytlmUHIN5tEMgl5rgqWdWaIQXYZ6XPyYKl1", "yem38OfoUbsoPZvOVr3k0n3X7JSUDYD8oxAKXvrJw6k")
     twitterApi = API(auth_handler=auth,
                     host='api.twitter.com', search_host='search.twitter.com',
-                    cache=DBFileCache(DBCache(timeout=-1), FileCache("cache", timeout=-1), timeout = -1), secure=False, api_root='/1', search_root='',
+                    cache=DBFileCache(DBCache(timeout=-1, conn=DBSingleton.getInstance()), FileCache("cache", timeout=-1), timeout = -1), secure=False, api_root='/1', search_root='',
                     retry_count=0, retry_delay=0, retry_errors=None,
                     parser=None)
     
@@ -80,12 +81,12 @@ if __name__ == "__main__":
     users = twitterApi.search_users(q=sys.argv[1], per_page=200)
     results = []
     queue = Queue.Queue()
-    for i in range(3):
+    for i in range(20):
 	t = EvalThread(queue)
 	t.setDaemon(True)
         t.start()
     
-    for u in users[:3]:
+    for u in users:
 	queue.put(u)
     queue.join()
     
