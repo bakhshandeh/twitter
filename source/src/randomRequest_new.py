@@ -44,5 +44,5 @@ if __name__ == "__main__":
                     print "fid: ",fId
                     EvalUser.loadFromDB(fId)
         except Exception, e:
-            #print traceback.print_exc(sys.stderr)
+            print traceback.print_exc(sys.stderr)
             print e
