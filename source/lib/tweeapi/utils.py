@@ -20,7 +20,7 @@ class EvalUser:
     @classmethod
     def loadFromDB(cls,userId, userObj = None):
         cur = DBSingleton.getInstance().cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cur.execute("SELECT * from users where id=%s",(userId, ))
+        cur.execute("SELECT * from users where id=%s;",(userId, ))
         row = cur.fetchone()
         if row:
             return cls.loadFromDBRow(row)
