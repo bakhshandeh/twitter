@@ -45,7 +45,9 @@ if __name__ == "__main__":
                     try:
                         EvalUser.loadFromDB(fId)
                     except Exception,e:
+                        handle_exception(e)
                         print e
         except Exception, e:
+            handle_exception(e)
             print traceback.print_exc(sys.stderr)
             print e
