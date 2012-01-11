@@ -75,9 +75,13 @@ class EvalUser:
     def save(self):
         db = DBSingleton.getInstance()
         cursor = db.cursor()
-        cursor.execute("INSERT into users(id, screen_name, obj_data, retweet_factor, impact_factor, mc_factor) "+
+        try:
+            cursor.execute("INSERT into users(id, screen_name, obj_data, retweet_factor, impact_factor, mc_factor) "+
                 "values(%s, %s, %s, %s, %s, %s);", (self.id, self.screen_name, pickle.dumps(self.userObj), self.retweetFactor, self.impactFactor, 0))
-        db.commit()
+            db.commit()
+        except Exception,e:
+            db.rollback()
+            print e
 
     
     @classmethod
