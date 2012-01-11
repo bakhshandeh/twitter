@@ -18,6 +18,7 @@ def handle_exception(e):
         ret = os.popen("bash ~/bin/get_exits.sh").readline()
         ret.strip()
         torBadNodes += ret.replace(" ", "").replace("$", "\$")
+        print "bash ~/bin/change_ip.sh \""+torBadNodes+"\""
         os.system("bash ~/bin/change_ip.sh \""+torBadNodes+"\"")
         time.sleep(10)
 
