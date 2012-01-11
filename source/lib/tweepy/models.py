@@ -13,11 +13,12 @@ followers = None
 
 torNodesIndex = 1
 def handle_exception(e):
+    print "start"
     error.toLog("changing the ip ...."+str(e))
     if sys.argv.count("-no-check") > 0:
-	return 0
+        return 0
     if str(e).find("hour") != -1:
-	error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
+        error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         #os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
         ret = os.popen("~/bin/get_exits.sh").readlines()
         print ret,"salam"

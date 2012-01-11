@@ -285,6 +285,8 @@ class DBCache(Cache):
 	self.conn.commit()
 
     def get(self, key, timeout=None):
+        if "lookup.json" in key:
+            return None
 	cur = self.conn.cursor()
 	cur.execute("SELECT value from data where k=%s",(key, ))
 	row = cur.fetchone()
