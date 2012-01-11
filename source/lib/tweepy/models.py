@@ -21,8 +21,8 @@ def handle_exception(e):
         #os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
         ret = os.popen("~/bin/get_exits.sh").readlines()
         print ret,"salam"
-        ret.strip()
-        print ret.replace("$", "\$")
+#        ret.strip()
+#        print ret.replace("$", "\$")
         sys.exit(0)
         time.sleep(10)
 
