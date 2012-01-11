@@ -11,18 +11,19 @@ from tweepy import error
 countries = None
 followers = None
 
-torNodesIndex = 1
+torBadNodes = "";
 def handle_exception(e):
-    print "start"
+    global torBadNodes
     error.toLog("changing the ip ...."+str(e))
     if sys.argv.count("-no-check") > 0:
         return 0
     if str(e).find("hour") != -1:
         error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         #os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
-        ret = os.popen("bash ~/bin/get_exits.sh").readlines()
-        print ret,"salam"
-        sys.exit(0)
+        ret = os.popen("bash ~/bin/get_exits.sh").readline()
+        ret.strip()
+        torBadNodes += ret.replace(" ", "").replace("$", "\$")
+        os.system("bash ~/bin/change_ip.sh \""+torBadNodes+"\"")
         time.sleep(10)
 
 
