@@ -1,1 +1,1 @@
-echo -e "authenticate \"\"\nsetconf ExcludeExitNodes=$1\nsignal newnym" | nc 127.0.0.1 9051
+echo -e "authenticate \"\"\nsetconf ExcludeExitNodes=$1\nsignal newnym\nquit" | nc 127.0.0.1 9051

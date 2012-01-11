@@ -1,1 +1,1 @@
-git commit -a;tsocks git push origin
+git commit -a -m "commit";tsocks git push origin
