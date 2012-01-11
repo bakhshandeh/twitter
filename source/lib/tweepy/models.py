@@ -17,7 +17,11 @@ def handle_exception(e):
         error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         ret = os.popen("bash ~/bin/get_exits.sh").readline()
         ret.strip()
-        torBadNodes += ret.replace(" ", "").replace("$", "\$").replace("\n", "")
+        
+        deli = ","
+        if torBadNodes == "":
+            deli = ""
+        torBadNodes += (deli + ret.replace(" ", "").replace("$", "\$").replace("\n", ""))
         print "bash ~/bin/change_ip.sh \""+torBadNodes+"\""
         os.system("bash ~/bin/change_ip.sh \""+torBadNodes+"\"")
         time.sleep(10)
