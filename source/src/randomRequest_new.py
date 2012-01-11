@@ -42,7 +42,10 @@ if __name__ == "__main__":
                 EvalUser.load(u)
                 for fId in twitterApi.friends_ids(user_id=u.id)[0]:
                     print "fid: ",fId
-                    EvalUser.loadFromDB(fId)
+                    try:
+                        EvalUser.loadFromDB(fId)
+                    except Exception,e:
+                        print e
         except Exception, e:
             print traceback.print_exc(sys.stderr)
             print e
