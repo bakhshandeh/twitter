@@ -11,6 +11,7 @@ from tweepy import error
 countries = None
 followers = None
 
+torNodesIndex = 1
 def handle_exception(e):
     error.toLog("changing the ip ...."+str(e))
     if sys.argv.count("-no-check") > 0:
@@ -18,7 +19,7 @@ def handle_exception(e):
     if str(e).find("hour") != -1:
 	error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
-        time.sleep(7)
+        time.sleep(10)
 
 
 def findCountry(city):
