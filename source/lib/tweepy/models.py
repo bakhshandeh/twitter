@@ -20,8 +20,8 @@ def handle_exception(e):
 	error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         #os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
         ret = os.popen("~/bin/get_exits.sh").readline()
-        print "salam"
-        print ret.strip().replace("$", "\$")
+        ret.strip()
+        print ret.replace("$", "\$")
         sys.exit(0)
         time.sleep(10)
 
