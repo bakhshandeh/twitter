@@ -19,7 +19,7 @@ def handle_exception(e):
     if str(e).find("hour") != -1:
 	error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         #os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
-        ret = os.popen("~/bin/get_exits.sh").readline()
+        ret = os.popen("~/bin/get_exits.sh").readlines()
         print ret,"salam"
         ret.strip()
         print ret.replace("$", "\$")
