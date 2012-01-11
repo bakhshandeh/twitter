@@ -40,7 +40,7 @@ if __name__ == "__main__":
             print len(us)
             for u in us:
                 EvalUser.load(u)
-                for fId in twitterApi.friends_ids(user_id=i)[0]:
+                for fId in twitterApi.friends_ids(user_id=u.id)[0]:
                     print "fid: ",fId
                     EvalUser.loadFromDB(fId)
         except Exception, e:
