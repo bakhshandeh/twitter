@@ -18,7 +18,7 @@ def handle_exception(e):
     if str(e).find("hour") != -1:
 	error.toLog("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051");
         os.system("bash -c \"echo authenticate \\\"\\\";echo signal newnym;echo quit \"|nc 127.0.0.1 9051")
-        time.sleep(2)
+        time.sleep(7)
 
 
 def findCountry(city):
