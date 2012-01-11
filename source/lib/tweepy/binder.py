@@ -9,6 +9,7 @@ import re
 
 from tweepy.error import TweepError
 from tweepy.utils import convert_to_utf8_str
+from tweepy import error
 
 re_path_template = re.compile('{\w+}')
 
@@ -155,7 +156,7 @@ def bind_api(**config):
                 # Execute request
                 try:
                     conn.request(self.method, self.scheme + self.host + url, headers=self.headers, body=self.post_data)
-                    print "BIND REQUEST"
+                    error.toLog("BIND REQUEST")
                     #conn.request(self.method, url, headers=self.headers, body=self.post_data)
                     resp = conn.getresponse()
                 except Exception, e:
