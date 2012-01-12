@@ -28,7 +28,7 @@ class EvalUser:
     
     @classmethod
     def loadFromDBRow(cls, row):
-        print "FROM DB"
+        print "FROM USERS DB"
         userObj = pickle.loads(row["obj_data"])
         return cls(userObj, row["retweet_factor"], row["impact_factor"], row["mc_factor"])
     

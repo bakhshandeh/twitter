@@ -3,9 +3,6 @@
 # See LICENSE for details.
 
 import time
-import threading
-import os
-import psycopg2
 import cPickle as pickle
 
 try:
@@ -213,7 +210,6 @@ class FileCache(Cache):
             self.lock.release()
 
     def get(self, key, timeout=None):
-        print "GET FROM FILE"
         return self._get(self._get_path(key), timeout)
 
     def _get(self, path, timeout):
@@ -242,9 +238,9 @@ class FileCache(Cache):
             self._unlock_file(f_lock)
             return value
         except EOFError:
-    	    print "eof error"
-    	    self._delete_file(path)
-    	    self._unlock_file(f_lock)
+            print "eof error"
+            self._delete_file(path)
+            self._unlock_file(f_lock)
     	    return self._get(path, timeout)
         finally:
             self.lock.release()
@@ -274,45 +270,48 @@ class FileCache(Cache):
 class DBCache(Cache):
     
     def __init__(self, timeout=60, conn = None):
-	Cache.__init__(self,timeout)
-	self.conn = conn
+        Cache.__init__(self,timeout)
+        self.conn = conn
     
     def store(self, key, value):
         if "lookup.json" in key:
             return None
-	val= pickle.dumps(value)
-	cur = self.conn.cursor()
-	ret = cur.execute("INSERT into data(k, value) values(%s, %s)",(key, val))
-	self.conn.commit()
+        val= pickle.dumps(value)
+        cur = self.conn.cursor()
+        cur.execute("INSERT into data(k, value) values(%s, %s)",(key, val))
+        self.conn.commit()
 
     def get(self, key, timeout=None):
         if "lookup.json" in key:
             return None
-	cur = self.conn.cursor()
-	cur.execute("SELECT value from data where k=%s",(key, ))
-	row = cur.fetchone()
-	if row:
-	    entry = pickle.loads(row[0])
-	    return entry
-	return None
+        cur = self.conn.cursor()
+        cur.execute("SELECT value from data where k=%s",(key, ))
+        row = cur.fetchone()
+        if row:
+            entry = pickle.loads(row[0])
+            return entry
+        return None
 
 
 class DBFileCache(Cache):
-	
-	def __init__(self, dbCache, fileCache, timeout=60):
-	    Cache.__init__(self, timeout)
-	    self.dbCache = dbCache
-	    self.fileCache = fileCache
-	
-	def store(self, key, value):
-	    self.dbCache.store(key, value)
-	    
-	def get(self, key, timeout=None):
-	    dbRet = self.dbCache.get(key, timeout)
-	    if dbRet:
-		return dbRet
-	    fileRet = self.fileCache.get(key, timeout)
-	    if fileRet:
-		self.dbCache.store(key, fileRet)
-	    return fileRet
+    
+    def __init__(self, dbCache, fileCache, timeout=60):
+        Cache.__init__(self, timeout)
+        self.dbCache = dbCache
+        self.fileCache = fileCache
+
+    def store(self, key, value):
+        self.dbCache.store(key, value)
+    
+    def get(self, key, timeout=None):
+        dbRet = self.dbCache.get(key, timeout)
+        if dbRet:
+            print "DB HIT"
+            return dbRet
+        fileRet = self.fileCache.get(key, timeout)
+        if fileRet:
+            print "FILE HIT"
+            self.dbCache.store(key, fileRet)
+            return fileRet
+        return None
     
