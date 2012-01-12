@@ -158,7 +158,7 @@ def bind_api(**config):
                     conn.request(self.method, self.scheme + self.host + url, headers=self.headers, body=self.post_data)
                     #conn.request(self.method, url, headers=self.headers, body=self.post_data)
                     resp = conn.getresponse()
-                    error.toLog("BIND REQUEST")
+                    print "BIND REQUEST"
                 except Exception, e:
                     raise TweepError('Failed to send request: %s' % e)
 

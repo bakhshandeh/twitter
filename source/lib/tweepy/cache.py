@@ -237,7 +237,7 @@ class FileCache(Cache):
             print "eof error"
             self._delete_file(path)
             self._unlock_file(f_lock)
-    	    return self._get(path, timeout)
+            return self._get(path, timeout)
         finally:
             self.lock.release()
 
