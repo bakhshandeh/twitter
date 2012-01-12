@@ -1,8 +1,4 @@
-# Tweepy
-# Copyright 2009-2010 Joshua Roesslein
-# See LICENSE for details.
-
-import time
+import time,os,threading
 import cPickle as pickle
 
 try:
