@@ -28,6 +28,7 @@ class EvalUser:
     
     @classmethod
     def loadFromDBRow(cls, row):
+        print "FROM DB"
         userObj = pickle.loads(row["obj_data"])
         return cls(userObj, row["retweet_factor"], row["impact_factor"], row["mc_factor"])
     
@@ -73,6 +74,7 @@ class EvalUser:
         return -1
     
     def save(self):
+        print "SAVE"
         db = DBSingleton.getInstance()
         cursor = db.cursor()
         try:

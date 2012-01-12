@@ -213,6 +213,7 @@ class FileCache(Cache):
             self.lock.release()
 
     def get(self, key, timeout=None):
+        print "GET FROM FILE"
         return self._get(self._get_path(key), timeout)
 
     def _get(self, path, timeout):
