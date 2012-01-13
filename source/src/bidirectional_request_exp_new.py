@@ -1,5 +1,4 @@
 import sys,random,math,time
-from tweeapi import APISingleton
 sys.path.append("../lib/")
 
 from tweepy import api, error
