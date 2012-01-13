@@ -6,7 +6,7 @@ from tweepy.cache import FileCache,DBCache, DBFileCache
 from tweepy.api import API
 import tweepy
 from tweepy.models import *
-from tweeapi import *
+from tweeapi import APISingleton
 
 def writeOut(filename, txt):
     f = open(filename, 'a');
