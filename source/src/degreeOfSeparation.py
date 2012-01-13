@@ -1,5 +1,6 @@
 import sys,random,math,time
 sys.path.append("../lib/")
+from tweeapi import APISingleton
 
 from tweepy import api, error
 from tweepy.cache import FileCache,DBCache, DBFileCache
@@ -179,19 +180,20 @@ forward = []
 forward_ds = backward_ds = [1]
 forward_min = backward_min = 0
 backward = []
+twitterApi = APISingleton.getInstance()
 if __name__ == "__main__":
     while 1:
         try:
             #outfile = sys.argv[1]
             #auth = tweepy.BasicAuthHandler('reza_shz', 'mehdireza') 
-            auth = tweepy.OAuthHandler("xg2hLKvf1nxw1TUALvx5xA", "MkX0lDUik0mJuc6nxserddbQDWd7ZTErQN6Tf0OhOM")
-            auth.set_access_token("174566652-MOGbxytlmUHIN5tEMgl5rgqWdWaIQXYZ6XPyYKl1", "yem38OfoUbsoPZvOVr3k0n3X7JSUDYD8oxAKXvrJw6k")
+            #auth = tweepy.OAuthHandler("xg2hLKvf1nxw1TUALvx5xA", "MkX0lDUik0mJuc6nxserddbQDWd7ZTErQN6Tf0OhOM")
+            """auth.set_access_token("174566652-MOGbxytlmUHIN5tEMgl5rgqWdWaIQXYZ6XPyYKl1", "yem38OfoUbsoPZvOVr3k0n3X7JSUDYD8oxAKXvrJw6k")
 
             twitterApi = API(auth_handler=auth,
                     host='api.twitter.com', search_host='search.twitter.com',
                      cache=DBFileCache(DBCache(timeout=-1), FileCache("cache", timeout=-1), timeout = -1), secure=False, api_root='/1', search_root='',
                     retry_count=0, retry_delay=0, retry_errors=None,
-                    parser=None)
+                    parser=None)"""
                         
             username1, username2 = sys.argv[1],sys.argv[2]
             user1 = twitterApi.get_user(username1) #@UndefinedVariable
