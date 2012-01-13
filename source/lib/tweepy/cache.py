@@ -300,6 +300,7 @@ class DBFileCache(Cache):
         self.dbCache.store(key, value)
     
     def get(self, key, timeout=None):
+        print key
         dbRet = self.dbCache.get(key, timeout)
         if dbRet:
             print "DB HIT"

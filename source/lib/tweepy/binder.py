@@ -118,6 +118,7 @@ def bind_api(**config):
 
             # Query the cache if one is available
             # and this request uses a GET method.
+            print self.method, self.api.cache
             if self.api.cache and self.method == 'GET':
                 cache_result = self.api.cache.get(url)
                 # if cache result found and not expired, return it
