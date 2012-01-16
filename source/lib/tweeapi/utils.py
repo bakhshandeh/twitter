@@ -101,7 +101,8 @@ class EvalUser:
                 eUser = EvalUser.loadFromDB(frId)
                 frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
                 frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
-                eUsers.append(eUser)
+                if getSim(frTFIDFArray, selfTFIDFArray) > 0.1:
+                    eUsers.append(eUser)
             except:
                 pass
         return eUsers

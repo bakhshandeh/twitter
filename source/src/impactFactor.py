@@ -15,7 +15,7 @@ if __name__ == "__main__":
         try:
             eUser = EvalUser.load(u)
             results.append(eUser)
-            results += eUser.BFS(5)
+            results += eUser.BFS(10)
         except Exception,e:
             traceback.print_exc(sys.stdout)
             pass
