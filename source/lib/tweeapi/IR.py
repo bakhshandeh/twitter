@@ -52,8 +52,8 @@ def getSim(tfidf1, tfidf2):
     p12 = 0
     for w in tfidf1.keys():
         p1 += tfidf1[w]**2
-    if w in tfidf2.keys():
-        p12 += tfidf1[w]*tfidf2[w]
+        if tfidf2.has_key(w):
+            p12 += tfidf1[w]*tfidf2[w]
     for w in tfidf2.keys():
         p2 += tfidf2[w]**2
     if not p1 or not p2:
