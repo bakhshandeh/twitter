@@ -8,10 +8,10 @@ def getIDF(word):
     fileName = "enidf.txt"
     if not all_idfs:
         all_idfs = {}
-    f = open(fileName, 'r')
-    for line in f.readlines():
-        list = line.split()
-        all_idfs[list[0].lower()] = float(list[1])
+        f = open(fileName, 'r')
+        for line in f.readlines():
+            list = line.split()
+            all_idfs[list[0].lower()] = float(list[1])
     word = word.lower()
     if all_idfs.has_key(word):
         return all_idfs[word]
@@ -40,8 +40,9 @@ def getTFIDFArray(lines):
                 else: 
                     tfs[w]=1
     for i in tfs.keys():
-        if i not in stopwords and getIDF(i):
-            tfs[i] = tfs[i]*math.log(n/(getIDF(i)+1.000), 2)
+        idf = getIDF(i)
+        if i not in stopwords and idf:
+            tfs[i] = tfs[i]*math.log(n/(idf+1.000), 2)
         else: tfs.pop(i)
     return tfs
 
