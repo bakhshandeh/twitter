@@ -96,9 +96,10 @@ class EvalUser:
         
         friends = self._api.friends_ids(user_id=self.id)[0]
         for frId in friends:
+            eUser = EvalUser.loadFromDB(frId)
             frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
             frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
-            print "sim: ", getSim(frTFIDFArray, selfTFIDFArray)
+            print self, eUser, "sim: ", getSim(frTFIDFArray, selfTFIDFArray)
             
         
     
