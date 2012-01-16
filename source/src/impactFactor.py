@@ -22,4 +22,4 @@ if __name__ == "__main__":
     results.sort()
     results.reverse()
     for i in results:
-        print i
+        print "@",i
