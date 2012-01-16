@@ -14,6 +14,7 @@ if __name__ == "__main__":
     for u in users[:]:
         try:
             eUser = EvalUser.load(u)
+            eUser.BFS()
             results.append(eUser)
         except Exception,e:
             traceback.print_exc(sys.stdout)

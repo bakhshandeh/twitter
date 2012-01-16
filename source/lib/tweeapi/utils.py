@@ -2,6 +2,7 @@ from tweeapi import APISingleton
 from db import DBSingleton
 import pickle
 import psycopg2.extras
+from tweeapi.IR import getTFIDFArray, getSim
 
 class EvalUser:
 
@@ -85,10 +86,20 @@ class EvalUser:
             db.rollback()
             print e
 
-    
     @classmethod
     def load(cls, user):
         return cls.loadFromDB(user.id, user)
     
+    def BFS(self):
+        selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
+        selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
+        
+        friends = self._api.friends_ids(user_id=self.id)[0]
+        for frId in friends:
+            frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
+            frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
+            print "sim: ", getSim(frTFIDFArray, selfTFIDFArray)
+            
+        
     
         
