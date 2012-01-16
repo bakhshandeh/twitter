@@ -1,5 +1,6 @@
 import time,os,threading
 import cPickle as pickle
+from tweepy.error import TweepError
 
 try:
     import hashlib
@@ -285,6 +286,8 @@ class DBCache(Cache):
         row = cur.fetchone()
         if row:
             entry = pickle.loads(row[0])
+            if not entry:
+                raise TweepError("Bad Request")
             return entry
         return None
 

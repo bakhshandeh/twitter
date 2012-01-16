@@ -179,6 +179,8 @@ def bind_api(**config):
                     error_msg = self.api.parser.parse_error(resp.read())
                 except Exception:
                     error_msg = "Twitter error response: status code = %s" % resp.status
+                if "Not authorized" in error_msg:
+                    self.api.cache.store(url, None)
                 raise TweepError(error_msg, resp)
 
             # Parse the response payload
