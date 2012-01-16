@@ -103,7 +103,8 @@ class EvalUser:
                 frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
                 if getSim(frTFIDFArray, selfTFIDFArray) > 0.1:
                     eUsers.append(eUser)
-            except:
+            except Exception,e:
+                print "ERROR: ",e
                 pass
         return eUsers
             #print self, eUser, "sim: ", getSim(frTFIDFArray, selfTFIDFArray)
