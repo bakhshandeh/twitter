@@ -90,16 +90,22 @@ class EvalUser:
     def load(cls, user):
         return cls.loadFromDB(user.id, user)
     
-    def BFS(self):
+    def BFS(self, count):
         selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
         selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
         
         friends = self._api.friends_ids(user_id=self.id)[0]
-        for frId in friends:
-            eUser = EvalUser.loadFromDB(frId)
-            frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
-            frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
-            print self, eUser, "sim: ", getSim(frTFIDFArray, selfTFIDFArray)
+        eUsers = []
+        for frId in friends[:count]:
+            try:
+                eUser = EvalUser.loadFromDB(frId)
+                frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
+                frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
+                eUsers.append(eUser)
+            except:
+                pass
+        return eUsers
+            #print self, eUser, "sim: ", getSim(frTFIDFArray, selfTFIDFArray)
             
         
     
