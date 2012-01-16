@@ -47,7 +47,9 @@ def getTFIDFArray(lines):
     return tfs
 
 def getSim(tfidf1, tfidf2):
-    p1 = p2 = p12 = 0
+    p1 = 0
+    p2 = 0
+    p12 = 0
     for w in tfidf1.keys():
         p1 += tfidf1[w]**2
     if w in tfidf2.keys():
