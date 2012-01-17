@@ -36,7 +36,7 @@ class EvalUser:
         
         tfidf = None
         if row["tfidf"] and len(row["tfidf"]):
-            tfidf = pickle.loads()
+            tfidf = pickle.loads(row["tfidf"])
         return cls(userObj, row["retweet_factor"], row["impact_factor"], row["mc_factor"], tfidf)
     
     @classmethod
@@ -124,17 +124,18 @@ class EvalUser:
         return cls.loadFromDB(user.id, user)
     
     def BFS(self, count):
-        selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
-        selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
+        #selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
+        #selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
         
         friends = self._api.friends_ids(user_id=self.id)[0]
         eUsers = []
         for frId in friends[:count]:
             try:
                 eUser = EvalUser.loadFromDB(frId)
-                frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
-                frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
-                if getSim(frTFIDFArray, selfTFIDFArray) > 0.1:
+                #frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
+                #frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
+                
+                if getSim(eUser.getTFIDFArray(), self.getTFIDFArray()) > 0.1:
                     eUsers.append(eUser)
             except Exception,e:
                 print "ERROR: ",e
