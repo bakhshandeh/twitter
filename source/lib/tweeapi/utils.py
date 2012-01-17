@@ -17,6 +17,7 @@ class EvalUser:
         self.impactFactor = impactFactor
         self.mcFactor = mcFactor
         self.TFIDFArray = TFIDFArray
+        self.similarity = None
         if retweetFactor == None:
             self.retweetFactor = self.__calcRetweetFactor()
             self.impactFactor = self.__calcImpactFactor()
@@ -97,7 +98,7 @@ class EvalUser:
             print e
 
     def __str__(self):
-        return self.screen_name+" "+str(self.getRetweetFactor())+ " " + str(self.getImpactFactor())
+        return self.screen_name+" "+str(self.getRetweetFactor()) + " " + str(self.getImpactFactor())+" "+self.getSim(self.getTFIDFArray())
 
     def __cmp__(self, other):
         slf = float(self.getRetweetFactor()*self.getImpactFactor())
@@ -126,6 +127,12 @@ class EvalUser:
     def load(cls, user):
         return cls.loadFromDB(user.id, user)
     
+    def getSim(self, TFIDFArray):
+        if self.similarity == None:
+            self.similarity = getSim(TFIDFArray, self.getTFIDFArray())
+        return self.similarity
+         
+    
     def BFS(self, count):
         #selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
         #selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
@@ -138,7 +145,7 @@ class EvalUser:
                 #frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
                 #frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
                 
-                if getSim(eUser.getTFIDFArray(), self.getTFIDFArray()) > 0.1:
+                if eUser.getSim(self.getTFIDFArray()) > 0.1:
                     eUsers.append(eUser)
             except Exception,e:
                 print "ERROR: ",e
