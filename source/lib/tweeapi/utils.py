@@ -3,6 +3,8 @@ from db import DBSingleton
 import pickle
 import psycopg2.extras
 from tweeapi.IR import getTFIDFArray, getSim
+import traceback
+import sys
 
 class EvalUser:
 
@@ -118,6 +120,7 @@ class EvalUser:
         except Exception,e:
             db.rollback()
             print e
+            traceback.print_exc(sys.stdout)
 
     @classmethod
     def load(cls, user):
