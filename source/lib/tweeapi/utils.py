@@ -67,7 +67,7 @@ class EvalUser:
     def __calcRetweetFactor(self):
         tweets = self._api.user_timeline(user_id=self.id, count=200, include_rts=1)
         retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
-        return retweets/100.00
+        return retweets/200.00
     
     def __calcImpactFactor(self):
         friends = self._api.friends_ids(user_id=self.id)
