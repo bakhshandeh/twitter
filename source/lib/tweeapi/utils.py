@@ -98,7 +98,7 @@ class EvalUser:
             print e
 
     def __str__(self):
-        return self.screen_name+" "+str(self.getRetweetFactor()) + " " + str(self.getImpactFactor())+" "+self.getSim(self.getTFIDFArray())
+        return self.screen_name+" "+str(self.getRetweetFactor()) + " " + str(self.getImpactFactor())+" "+str(self.getSim(self.getTFIDFArray()))
 
     def __cmp__(self, other):
         slf = float(self.getRetweetFactor()*self.getImpactFactor())
