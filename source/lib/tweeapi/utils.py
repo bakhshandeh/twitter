@@ -62,7 +62,7 @@ class EvalUser:
     
         
     def __calcRetweetFactor(self):
-        tweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
+        tweets = self._api.user_timeline(user_id=self.id, count=200, include_rts=1)
         retweets = len([i for i in tweets if  hasattr(i, "retweeted_status")])
         return retweets/100.00
     
@@ -77,7 +77,7 @@ class EvalUser:
         return impact
     
     def _calcTFIDF(self):
-        tweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
+        tweets = self._api.user_timeline(user_id=self.id, count=200, include_rts=1)
         tfidf = getTFIDFArray([t.text for t in tweets])
         return tfidf
     
