@@ -6,7 +6,7 @@ from tweeapi.IR import getTFIDFArray, getSim
 
 class EvalUser:
 
-    def __init__(self, user, retweetFactor=None, impactFactor=None, mcFactor=None):
+    def __init__(self, user, retweetFactor=None, impactFactor=None, mcFactor=None, TFIDFArray = None):
         self._api = APISingleton.getInstance()
         self.id = user.id
         self.screen_name = user.screen_name
@@ -14,9 +14,11 @@ class EvalUser:
         self.retweetFactor = retweetFactor
         self.impactFactor = impactFactor
         self.mcFactor = mcFactor
+        self.TFIDFArray = TFIDFArray
         if retweetFactor == None:
             self.retweetFactor = self.__calcRetweetFactor()
             self.impactFactor = self.__calcImpactFactor()
+            self.TFIDFArray = self._calcTFIDF()
     
     @classmethod
     def loadFromDB(cls,userId, userObj = None):
@@ -31,7 +33,11 @@ class EvalUser:
     def loadFromDBRow(cls, row):
         print "FROM USERS DB"
         userObj = pickle.loads(row["obj_data"])
-        return cls(userObj, row["retweet_factor"], row["impact_factor"], row["mc_factor"])
+        
+        tfidf = None
+        if row["tfidf"] and len(row["tfidf"]):
+            tfidf = pickle.loads()
+        return cls(userObj, row["retweet_factor"], row["impact_factor"], row["mc_factor"], tfidf)
     
     @classmethod
     def loadFromTwitter(cls, userId, userObj = None):
@@ -46,6 +52,14 @@ class EvalUser:
     
     def getRetweetFactor(self):
         return self.retweetFactor
+    
+    def getTFIDFArray(self):
+        if self.TFIDFArray:
+            return self.TFIDFArray
+        self.TFIDFArray = self._calcTFIDF()
+        self.saveTFIDF()
+        return self.TFIDFArray
+    
         
     def __calcRetweetFactor(self):
         tweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
@@ -61,6 +75,24 @@ class EvalUser:
         
         impact = len(list(set(followers_ids) & set(friends_ids)))/(len(followers_ids)+0.0000)
         return impact
+    
+    def _calcTFIDF(self):
+        tweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
+        tfidf = getTFIDFArray([t.text for t in tweets])
+        return tfidf
+    
+    def saveTFIDF(self):
+        if not self.getTFIDFArray():
+            return
+        db = DBSingleton.getInstance()
+        cursor = db.cursor()
+        try:
+            cursor.execute("update users set tfidf=%s where id=%s;" ,
+                           (pickle.dumps(self.getTFIDFArray()), self.id))
+            db.commit()
+        except Exception,e:
+            db.rollback()
+            print e
 
     def __str__(self):
         return self.screen_name+" "+str(self.getRetweetFactor())+ " " + str(self.getImpactFactor())
@@ -79,8 +111,9 @@ class EvalUser:
         db = DBSingleton.getInstance()
         cursor = db.cursor()
         try:
-            cursor.execute("INSERT into users(id, screen_name, obj_data, retweet_factor, impact_factor, mc_factor) "+
-                "values(%s, %s, %s, %s, %s, %s);", (self.id, self.screen_name, pickle.dumps(self.userObj), self.retweetFactor, self.impactFactor, 0))
+            cursor.execute("INSERT into users(id, screen_name, obj_data, retweet_factor, impact_factor, mc_factor, tfidf) "+
+                "values(%s, %s, %s, %s, %s, %s);", 
+                (self.id, self.screen_name, pickle.dumps(self.userObj), self.retweetFactor, self.impactFactor, 0, pickle.dumps(self.TFIDFArray)))
             db.commit()
         except Exception,e:
             db.rollback()
