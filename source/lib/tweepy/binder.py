@@ -189,9 +189,7 @@ def bind_api(**config):
             conn.close()
 
             # Store result into cache if one is available.
-            print "result: ", result
-            if self.api.cache and self.method == 'GET' and result:
-                print "STORED"
+            if self.api.cache and self.method == 'GET':
                 self.api.cache.store(url, result)
 
             return result
