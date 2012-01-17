@@ -114,7 +114,7 @@ class EvalUser:
         cursor = db.cursor()
         try:
             cursor.execute("INSERT into users(id, screen_name, obj_data, retweet_factor, impact_factor, mc_factor, tfidf) "+
-                "values(%s, %s, %s, %s, %s, %s);", 
+                "values(%s, %s, %s, %s, %s, %s, %s);", 
                 (self.id, self.screen_name, pickle.dumps(self.userObj), self.retweetFactor, self.impactFactor, 0, pickle.dumps(self.TFIDFArray)))
             db.commit()
         except Exception,e:
