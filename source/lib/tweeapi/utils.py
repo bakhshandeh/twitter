@@ -82,7 +82,7 @@ class EvalUser:
         return tfidf
     
     def saveTFIDF(self):
-        if not self.getTFIDFArray():
+        if not self.TFIDFArray:
             return
         db = DBSingleton.getInstance()
         cursor = db.cursor()
