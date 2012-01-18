@@ -18,7 +18,7 @@ def handle_exception(e):
         ret = os.popen("bash ~/bin/get_exits.sh").readline()
         ret.strip()
         
-        if len(torBadNodes) > 1000:
+        if len(torBadNodes) > 5000:
             torBadNodes = ""
         
         deli = ","
