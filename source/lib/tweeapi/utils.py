@@ -123,7 +123,7 @@ class EvalUser:
         except Exception,e:
             db.rollback()
             print e
-            traceback.print_exc(sys.stdout)
+            #traceback.print_exc(sys.stdout)
 
     @classmethod
     def load(cls, user):
