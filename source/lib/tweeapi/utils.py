@@ -76,7 +76,9 @@ class EvalUser:
         followers = self._api.followers_ids(user_id=self.id)
         followers_ids = followers[0]
         
-        impact = len(list(set(followers_ids) & set(friends_ids)))/(len(followers_ids)+0.0000)
+        impact = 0
+        if len(followers_ids):
+            impact = len(list(set(followers_ids) & set(friends_ids)))/(len(followers_ids)+0.0000)
         return impact
     
     def _calcTFIDF(self):
