@@ -22,7 +22,6 @@ while 1:
     while row:
         fileName = getFileName(row[0]) 
         path = os.path.join("~/cache/", fileName)
-        print path
         if fileName and os.path.exists(path):
             os.remove(path)
             os.remove(path+".lock")
