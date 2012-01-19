@@ -26,4 +26,5 @@ while 1:
             os.remove(path)
             os.remove(path+".lock")
             print "REMOVED ",path
+        row = cur.fetchone()
     offset += limit
