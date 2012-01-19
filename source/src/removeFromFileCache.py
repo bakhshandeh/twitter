@@ -6,7 +6,7 @@ from db import DBSingleton
 
 def getFileName(k):
     md5 = hashlib.md5()
-    md5.update("/1/users/show.json?id=jadi")
+    md5.update(k)
     return md5.hexdigest()
 
 
