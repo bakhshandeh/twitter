@@ -144,7 +144,7 @@ class EvalUser:
     def load(cls, user):
         return cls.loadFromDB(user.id, user)
     
-    def getSim(self, TFIDFArray):
+    def getSim(self, TFIDFArray=None):
         if self.similarity == None:
             self.similarity = getSim(TFIDFArray, self.getTFIDFArray())
         return self.similarity
