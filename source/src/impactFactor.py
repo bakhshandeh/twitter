@@ -23,9 +23,7 @@ if __name__ == "__main__":
     results.sort()
     results.reverse()
     
-    jsonDic = {}
-    i = 0
+    jsonDic = []
     for user in results:
-        jsonDic[i] = user.getData()
-        i+=1
+        jsonDic.append(user.getData())
     print simplejson.dumps(jsonDic)
