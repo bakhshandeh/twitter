@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     users = twitterApi.search_users(q=sys.argv[1], per_page=200)
     results = []
-    for u in users[:2]:
+    for u in users[:]:
         try:
             eUser = EvalUser.load(u)
             results.append(eUser)
