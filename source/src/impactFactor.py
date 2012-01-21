@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     users = twitterApi.search_users(q=sys.argv[1], per_page=200)
     results = []
-    for u in users[:]:
+    for u in users[:2]:
         try:
             eUser = EvalUser.load(u)
             results.append(eUser)
@@ -24,6 +24,8 @@ if __name__ == "__main__":
     results.reverse()
     
     jsonDic = {}
+    i = 0
     for user in results:
-        jsonDic[user.getUserObj().id] = user.getData()
+        jsonDic[i] = user.getData()
+        i+=1
     print simplejson.dumps(jsonDic)
