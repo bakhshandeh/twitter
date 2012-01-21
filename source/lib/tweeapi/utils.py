@@ -146,6 +146,8 @@ class EvalUser:
     
     def getSim(self, TFIDFArray=None):
         if self.similarity == None:
+            if TFIDFArray == None:
+                TFIDFArray = self.getTFIDFArray()
             self.similarity = getSim(TFIDFArray, self.getTFIDFArray())
         return self.similarity
          
