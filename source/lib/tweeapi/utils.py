@@ -131,7 +131,7 @@ class EvalUser:
     def getData(self):
         dic = {}
         dic["screen_name"] = self.userObj.screen_name
-        dic["id"] = self.screen_name.id
+        dic["id"] = self.userObj.id
         dic["description"] = self.userObj.description
         dic["profile_image_url"] = self.userObj.profile_image_url
         dic["retweet_factor"] = self.getRetweetFactor()
