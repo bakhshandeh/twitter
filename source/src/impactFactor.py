@@ -1,7 +1,7 @@
 import sys
 import traceback
-import simplejson
 sys.path.append("../lib/")
+import simplejson
 
 from tweeapi import APISingleton
 from tweeapi.utils import EvalUser
