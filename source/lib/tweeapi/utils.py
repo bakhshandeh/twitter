@@ -49,6 +49,9 @@ class EvalUser:
         ret = cls(userObj)
         ret.save()
         return ret
+    
+    def getUserObj(self):
+        return self.userObj 
         
     def getImpactFactor(self):
         return self.impactFactor
@@ -124,6 +127,18 @@ class EvalUser:
             db.rollback()
             print e
             #traceback.print_exc(sys.stdout)
+            
+    def getData(self):
+        dic = {}
+        dic["screen_name"] = self.userObj.screen_name
+        dic["id"] = self.screen_name.id
+        dic["description"] = self.userObj.description
+        dic["profile_image_url"] = self.userObj.profile_image_url
+        dic["retweet_factor"] = self.getRetweetFactor()
+        dic["impact_factor"] = self.getImpactFactor()
+        dic["mc_factor"] = self.mcFactor
+        dic["sim"] = self.getSim()
+        return dic
 
     @classmethod
     def load(cls, user):

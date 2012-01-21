@@ -1,5 +1,6 @@
 import sys
 import traceback
+import simplejson
 sys.path.append("../lib/")
 
 from tweeapi import APISingleton
@@ -21,5 +22,8 @@ if __name__ == "__main__":
             pass
     results.sort()
     results.reverse()
-    for i in results:
-        print "@",i
+    
+    jsonDic = {}
+    for user in results:
+        jsonDic[user.getUserObj().id] = user.getData()
+    print simplejson.dumps(jsonDic)
