@@ -155,7 +155,7 @@ def bind_api(**config):
 
                 # Execute request
                 try:
-            	    print self.method,self.scheme + self.host + url, self.headers
+            	    #print self.method,self.scheme + self.host + url, self.headers
                     conn.request(self.method, self.scheme + self.host + url, headers=self.headers, body=self.post_data)
                     #conn.request(self.method, url, headers=self.headers, body=self.post_data)
                     resp = conn.getresponse()
