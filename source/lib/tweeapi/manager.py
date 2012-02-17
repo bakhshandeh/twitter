@@ -5,7 +5,7 @@ import psycopg2.extras
 def followUsers(userInfo,  users):
     api = APISingleton.getInstanceForUser(userInfo)
     
-    cur = DBSingleton.getInstance().cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur = DBSingleton.getInstance().cursor()
     cur.execute("select nextval('tracking_seq')")
     id = cur.fetchone()[0]
     
