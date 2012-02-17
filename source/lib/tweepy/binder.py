@@ -113,12 +113,16 @@ def bind_api(**config):
         def execute(self):
             # Build the request URL
             url = self.api_root + self.path
+            nocache = False
+            if self.parameters.has_key("nocache"):
+                nocache = True
+                self.parameters.pop("nocache")
             if len(self.parameters):
                 url = '%s?%s' % (url, urllib.urlencode(self.parameters))
-
+            
             # Query the cache if one is available
             # and this request uses a GET method.
-            if self.api.cache and self.method == 'GET':
+            if not nocache and self.api.cache and self.method == 'GET':
                 cache_result = self.api.cache.get(url)
                 # if cache result found and not expired, return it
                 if cache_result:

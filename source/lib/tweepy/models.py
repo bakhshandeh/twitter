@@ -3,6 +3,7 @@ from tweepy.utils import parse_datetime, parse_html_value, parse_a_href, \
         parse_search_datetime, unescape_html
 import os,time,sys
 from tweepy import error
+from db import DBSingleton
 
 countries = None
 followers = None
