@@ -26,7 +26,7 @@ def getInstanceForUser(userInfo):
     global twitterUsersApi
     userId = userInfo["oauth_uid"]
     if not twitterUsersApi.has_key(userId):
-        auth = tweepy.OAuthHandler("xg2hLKvf1nxw1TUALvx5xA", "MkX0lDUik0mJuc6nxserddbQDWd7ZTErQN6Tf0OhOM")
+        auth = tweepy.OAuthHandler("hbSLc8Dwmdr3y1rUboyjw", "N76BUKBiYVtM5h5ddlaO4B2W9XNcjAV0uC80S47Ew")
         auth.set_access_token(userInfo["oauth_token"], userInfo["oauth_secret"])
         twitterUsersApi[userId] = API(auth_handler=auth,
                     host='api.twitter.com', search_host='search.twitter.com',
