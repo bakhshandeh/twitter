@@ -1,7 +1,7 @@
 import sys
+sys.path.append("../lib/")
 from db import DBSingleton
 import psycopg2, psycopg2.extras
-sys.path.append("../lib/")
 
 from tweeapi import APISingleton, manager
 
