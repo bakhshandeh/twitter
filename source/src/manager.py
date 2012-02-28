@@ -18,13 +18,14 @@ def getUsersToFollow(keyword, count=10, currentFriends=[]):
             eUser = EvalUser.load(u)
             results.append(eUser)
             results += eUser.BFS(100, random_walk=True)
-            goodResults = [u.getUserObj() for u in results if u.getImpactFactor()*u.getRetweetFactor() > 0.1 and u.getUserObj().id not in currentFriends]
+            goodResults = [u.getUserObj() for u in results if u.getImpactFactor()*u.getRetweetFactor() > 0.05 and u.getUserObj().id not in currentFriends]
             print "Keyword=",keyword, "GoodResults#=",len(goodResults)
             if len(goodResults) > count:
                 return goodResults
         except Exception:
             traceback.print_exc(sys.stdout)
             pass
+    return goodResults
 
 if __name__ == "__main__":
 
@@ -43,5 +44,5 @@ if __name__ == "__main__":
             cur2.execute("select user_id from tracking_users where current_id=%s", (userId, ))
             
             currentFriends = [i["user_id"] for i in cur2]
-            users = getUsersToFollow(keyword.strip(), count=10, currentFriends = currentFriends)
+            users = getUsersToFollow(keyword.strip(), count=5, currentFriends = currentFriends)
             manager.followUsers(row, users)
