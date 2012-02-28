@@ -170,7 +170,7 @@ class EvalUser:
                 #frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
                 #frTFIDFArray = getTFIDFArray([t.text for t in frTweets])
                 
-                if eUser.getSim(self.getTFIDFArray()) > 0.1:
+                if eUser.getSim(self.getTFIDFArray()) > 0.05:
                     eUsers.append(eUser)
             except Exception,e:
                 print "ERROR: ",e
