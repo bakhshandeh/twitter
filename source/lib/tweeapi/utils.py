@@ -6,6 +6,7 @@ from tweeapi.IR import getTFIDFArray, getSim
 import traceback
 import sys
 import random
+from tweepy.models import handle_exception
 
 class EvalUser:
 
@@ -173,6 +174,7 @@ class EvalUser:
                 if eUser.getSim(self.getTFIDFArray()) > 0.05:
                     eUsers.append(eUser)
             except Exception,e:
+                handle_exception(e)
                 print "ERROR: ",e
                 pass
         return eUsers
