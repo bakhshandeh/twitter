@@ -3,7 +3,7 @@ sys.path.append("../lib/")
 from db import DBSingleton
 import psycopg2.extras
 
-from tweeapi import APISingleton, manager
+from tweeapi import APISingleton,manager
 
 if __name__ == "__main__":
 
@@ -16,7 +16,8 @@ if __name__ == "__main__":
     cur.execute("select * from site_users where manage=1")
     row = cur.fetchone()
     while row is not None:
-        print row
+        print row["manager"]
+        userId = 0
         row = cur.fetchone()
     
     #manager.followUsers(row, users)
