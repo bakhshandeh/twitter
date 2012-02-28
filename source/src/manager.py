@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     #users = [twitterApi.get_user(sys.argv[1])]
     db = DBSingleton.getInstance()
-    cur = DBSingleton.getInstance().cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     cur.execute("select * from site_users where manage=1")
     row = cur.fetchone()
