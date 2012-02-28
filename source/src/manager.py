@@ -17,5 +17,6 @@ if __name__ == "__main__":
     row = cur.fetchone()
     while row is not None:
         print row
+        row = cur.fetchone()
     
     #manager.followUsers(row, users)
