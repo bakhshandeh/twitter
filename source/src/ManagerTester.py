@@ -15,5 +15,5 @@ if __name__ == "__main__":
     
     cur.execute("select * from site_users where oauth_uid=%s", (sys.argv[2], ))
     row = cur.fetchone()
-    
+    print row
     manager.followUsers(row, users)

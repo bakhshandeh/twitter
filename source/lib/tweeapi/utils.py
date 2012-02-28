@@ -5,6 +5,7 @@ import psycopg2.extras
 from tweeapi.IR import getTFIDFArray, getSim
 import traceback
 import sys
+import random
 
 class EvalUser:
 
@@ -152,13 +153,18 @@ class EvalUser:
         return self.similarity
          
     
-    def BFS(self, count):
+    def BFS(self, count, random_walk=False):
         #selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
         #selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
         
         friends = self._api.followers_ids(user_id=self.id)[0]
+        count = min(count, len(friends))
+        if random_walk:
+            friends = random.sample(friends, count)
+        else:
+            friends = friends[:count]
         eUsers = []
-        for frId in friends[:count]:
+        for frId in friends:
             try:
                 eUser = EvalUser.loadFromDB(frId)
                 #frTweets = self._api.user_timeline(user_id=frId, count=100, include_rts=1)
