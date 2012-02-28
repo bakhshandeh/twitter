@@ -156,7 +156,7 @@ class EvalUser:
         #selfTweets = self._api.user_timeline(user_id=self.id, count=100, include_rts=1)
         #selfTFIDFArray = getTFIDFArray([t.text for t in selfTweets])
         
-        friends = self._api.friends_ids(user_id=self.id)[0]
+        friends = self._api.followers_ids(user_id=self.id)[0]
         eUsers = []
         for frId in friends[:count]:
             try:
