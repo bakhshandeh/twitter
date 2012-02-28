@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     twitterApi = APISingleton.getInstance()
 
-    users = [twitterApi.get_user(sys.argv[1])]
+    #users = [twitterApi.get_user(sys.argv[1])]
     db = DBSingleton.getInstance()
     cur = DBSingleton.getInstance().cursor(cursor_factory=psycopg2.extras.DictCursor)
     
