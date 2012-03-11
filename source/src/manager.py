@@ -18,7 +18,7 @@ def getUsersToFollow(keyword, count=10, currentFriends=[]):
             eUser = EvalUser.load(u)
             results.append(eUser)
             results += eUser.BFS(100, random_walk=True)
-            goodResults = [u.getUserObj() for u in results if u.getImpactFactor()*u.getRetweetFactor() > 0.05 and u.getUserObj().id not in currentFriends]
+            goodResults = [u for u in results if u.getImpactFactor()*u.getRetweetFactor() > 0.05 and u.getUserObj().id not in currentFriends]
             print "Keyword=",keyword, "GoodResults#=",len(goodResults)
             if len(goodResults) > count:
                 return goodResults
