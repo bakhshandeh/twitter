@@ -3,6 +3,8 @@ from db import DBSingleton
 import psycopg2.extras
 
 def followUsers(userInfo,  users):
+    if not len(users):
+        return;
     api = APISingleton.getInstanceForUser(userInfo)
     
     cur = DBSingleton.getInstance().cursor(cursor_factory=psycopg2.extras.DictCursor)
