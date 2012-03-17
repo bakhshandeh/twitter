@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     twitterApi = APISingleton.getInstance()
 
-    tweets = twitterApi.search(q=sys.argv[1].lower(), rpp=100, page=1)
+    tweets = twitterApi.search(q=sys.argv[1].lower(), rpp=100, page=1, force=True)
     tweets = [t.text for t in tweets]
     tfidfArray = getTFIDFArray(tweets)
     

@@ -118,6 +118,12 @@ def bind_api(**config):
             if self.parameters.has_key("nocache"):
                 nocache = True
                 self.parameters.pop("nocache")
+            
+            force = False
+            if self.parameters.has_key("force"):
+                force = True
+                self.parameters.pop("force")
+            
             if len(self.parameters):
                 url = '%s?%s' % (url, urllib.urlencode(self.parameters))
             
@@ -140,7 +146,7 @@ def bind_api(**config):
 
             # Continue attempting request until successful
             # or maximum number of retries is reached.
-            if "-offline" in sys.argv:
+            if "-offline" in sys.argv and not force:
                 raise TweepError("Offline Mode")
             
             retries_performed = 0
