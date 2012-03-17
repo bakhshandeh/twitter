@@ -14,13 +14,13 @@ if __name__ == "__main__":
 
     twitterApi = APISingleton.getInstance()
 
-    tweets = twitterApi.search(q=sys.argv[1], rpp=100, page=1)
+    tweets = twitterApi.search(q=sys.argv[1].lower(), rpp=100, page=1)
     tweets = [t.text for t in tweets]
     tfidfArray = getTFIDFArray(tweets)
     
     db = DBSingleton.getInstance()
     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute("select * from users where  retweet_factor > 0.2 and impact_factor > 0.2 limit 10000;")
+    cur.execute("select * from users where  retweet_factor > 0.2 and impact_factor > 0.2 limit 1000;")
     
     results = []
     for row in cur:
