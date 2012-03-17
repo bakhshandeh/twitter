@@ -34,7 +34,10 @@ if __name__ == "__main__":
     while 1:
         try:
             twitterApi = APISingleton.getInstance() 
-            ids = [random.randint(1, 100000000) for i in range(100)]
+            #ids = [random.randint(1, 100000000) for i in range(100)]
+            users = [i.user for i in twitterApi.public_timeline(nocache=True)]
+            friends = users[random.randint(0, len(users))].all_friend_ids()
+            ids = random.sample(friends, min(len(friends), 100))
             
             us = handle_func(twitterApi.lookup_users, user_ids=ids)
             print len(us)
