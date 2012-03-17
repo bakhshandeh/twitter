@@ -20,13 +20,13 @@ if __name__ == "__main__":
     
     db = DBSingleton.getInstance()
     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute("select * from users where  retweet_factor > 0.2 and impact_factor > 0.2 limit 10000;")
+    cur.execute("select * from users where  retweet_factor > 0.2 and impact_factor > 0.1 limit 5000;")
     
     results = []
     for row in cur:
         try:
             eUser = EvalUser.loadFromDBRow(row)
-            if eUser.getSim(tfidfArray) > 0.2:
+            if eUser.getSim(tfidfArray) > 0.1:
                 results.append(eUser)
             print len(results)
             if len(results) >= 20:
