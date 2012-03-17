@@ -26,7 +26,7 @@ if __name__ == "__main__":
     for row in cur:
         try:
             eUser = EvalUser.loadFromDBRow(row)
-            if eUser.getSim(tfidfArray) > 0.1:
+            if eUser.getSim(tfidfArray) > 0.2:
                 results.append(eUser)
             print len(results)
             if len(results) >= 10:
