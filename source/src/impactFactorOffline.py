@@ -20,7 +20,7 @@ if __name__ == "__main__":
     
     db = DBSingleton.getInstance()
     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute("select * from users where  retweet_factor > 0.2 and impact_factor > 0.2 limit 5000;")
+    cur.execute("select * from users where  retweet_factor > 0.2 and impact_factor > 0.2 limit 10000;")
     
     results = []
     for row in cur:
