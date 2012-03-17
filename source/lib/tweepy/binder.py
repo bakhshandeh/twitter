@@ -10,6 +10,7 @@ import re
 from tweepy.error import TweepError
 from tweepy.utils import convert_to_utf8_str
 from tweepy import error
+import sys
 
 re_path_template = re.compile('{\w+}')
 
@@ -139,6 +140,9 @@ def bind_api(**config):
 
             # Continue attempting request until successful
             # or maximum number of retries is reached.
+            if "-offline" in sys.argv:
+                raise TweepError("Offline Mode")
+            
             retries_performed = 0
             while retries_performed < self.retry_count + 1:
                 # Open connection
