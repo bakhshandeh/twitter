@@ -26,11 +26,8 @@ if __name__ == "__main__":
     for row in cur:
         try:
             eUser = EvalUser.loadFromDBRow(row)
-            if eUser.getSim(tfidfArray) > 0.1:
+            if eUser.getSim(tfidfArray) > 0:
                 results.append(eUser)
-            print len(results)
-            if len(results) >= 15:
-                break
         except Exception,e:
             traceback.print_exc(sys.stdout)
             pass
@@ -39,6 +36,6 @@ if __name__ == "__main__":
     results.reverse()
     
     jsonDic = []
-    for user in results:
+    for user in results[:40]:
         jsonDic.append(user.getData())
     print simplejson.dumps(jsonDic)

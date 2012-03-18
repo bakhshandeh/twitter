@@ -108,8 +108,8 @@ class EvalUser:
         return self.screen_name+" "+str(self.getRetweetFactor()) + " " + str(self.getImpactFactor())+" "+str(self.getSim(self.getTFIDFArray()))
 
     def __cmp__(self, other):
-        slf = float(self.getRetweetFactor()*self.getImpactFactor())
-        othr = float(other.getRetweetFactor()*other.getImpactFactor())
+        slf = float(self.getRetweetFactor()*self.getImpactFactor()*self.getSim())
+        othr = float(other.getRetweetFactor()*other.getImpactFactor()*other.getSim())
         if slf > othr:
             return 1
         if slf == othr:
