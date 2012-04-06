@@ -136,7 +136,7 @@ class EvalUser:
         dic["id"] = self.userObj.id
         dic["description"] = self.userObj.description
         dic["profile_image_url"] = self.userObj.profile_image_url
-        dic["retweet_factor"] = max(self.getRetweetFactor(),0.9)
+        dic["retweet_factor"] = min(self.getRetweetFactor(),0.9)
         dic["impact_factor"] = self.getImpactFactor()
         dic["mc_factor"] = self.mcFactor
         dic["sim"] = self.getSim()
